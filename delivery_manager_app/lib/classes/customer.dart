@@ -32,8 +32,8 @@ class Customer extends HiveObject {
 
   String getAddressShort() {
     String address = ((addressLine2 == null)
-        ? '$addressLine1 $suburb, $stateTerritory $postcode'
-        : '$addressLine2, $addressLine1 $suburb, $stateTerritory $postcode');
+        ? '$addressLine1, $suburb, $stateTerritory $postcode'
+        : '$addressLine2, $addressLine1, $suburb, $stateTerritory $postcode');
 
     return address;
   }

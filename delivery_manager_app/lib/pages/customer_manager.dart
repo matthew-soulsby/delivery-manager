@@ -50,9 +50,11 @@ class CustomerManager extends StatelessWidget {
                     itemCount: box.values.length,
                     itemBuilder: (context, index) {
                       Customer customer = box.getAt(index);
-                      return ListTile(
-                        title: Text(customer.name),
-                        subtitle: Text(customer.getAddressShort()),
+                      return Card(
+                        child: ListTile(
+                          title: Text(customer.name),
+                          subtitle: Text(customer.getAddressShort()),
+                        ),
                       );
                     },
                   );
