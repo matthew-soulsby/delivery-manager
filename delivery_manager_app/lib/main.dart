@@ -1,3 +1,4 @@
+import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
 import 'package:delivery_manager_app/pages/route_manager.dart';
 import 'package:delivery_manager_app/pages/schedule_manager.dart';
@@ -7,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   Hive.initFlutter();
+  Hive.registerAdapter(CustomerAdapter());
   runApp(const DeliveryManager());
 }
 
