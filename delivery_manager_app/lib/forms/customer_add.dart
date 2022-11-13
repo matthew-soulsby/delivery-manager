@@ -1,5 +1,6 @@
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
 class CustomerAddScreen extends StatefulWidget {
@@ -153,18 +154,19 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  initialValue: _postcode.toString(),
                   decoration: const InputDecoration(
                       labelText: 'Postcode',
                       helperText: "Enter postcode",
                       border: OutlineInputBorder()),
                   onSaved: (String? value) {
-                    if (value != null) {
+                    if (value != null && value != '') {
                       setState(() {
                         _postcode = int.parse(value);
                       });
                     }
                   },
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
               ElevatedButton(
