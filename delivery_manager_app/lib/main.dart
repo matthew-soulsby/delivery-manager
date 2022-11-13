@@ -41,41 +41,72 @@ class AppScaffold extends StatefulWidget {
 }
 
 class _AppScaffoldState extends State<AppScaffold> {
+  final PageController _pageController = PageController();
+
+  List<String> labelList = [
+    "Today's Route",
+    'Manage Customers',
+    'Schedule Deliveries'
+  ];
+
+  List<Widget> pageList = [
+    const RouteManager(),
+    const CustomerManager(),
+    const ScheduleManager(),
+  ];
+
   int currentPageIndex = 0;
+
+  void navigationItemSelected(int index) {
+    setState(() {
+      currentPageIndex = index;
+      _pageController.animateToPage(index,
+          duration: const Duration(milliseconds: 350), curve: Curves.ease);
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(labelList[currentPageIndex]),
+      ),
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: pageList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return pageList[index];
+        },
+      ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
+          navigationItemSelected(index);
         },
         selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
+        destinations: <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.local_shipping),
-            icon: Icon(Icons.local_shipping_outlined),
-            label: "Today's Route",
+            selectedIcon: const Icon(Icons.local_shipping),
+            icon: const Icon(Icons.local_shipping_outlined),
+            label: labelList[0],
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.groups),
-            icon: Icon(Icons.groups_outlined),
-            label: 'Manage Customers',
+            selectedIcon: const Icon(Icons.groups),
+            icon: const Icon(Icons.groups_outlined),
+            label: labelList[1],
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.edit_calendar),
-            icon: Icon(Icons.edit_calendar_outlined),
-            label: 'Schedule Deliveries',
+            selectedIcon: const Icon(Icons.edit_calendar),
+            icon: const Icon(Icons.edit_calendar_outlined),
+            label: labelList[2],
           ),
         ],
       ),
-      body: <Widget>[
-        const RouteManager(),
-        const CustomerManager(),
-        const ScheduleManager(),
-      ][currentPageIndex],
     );
   }
 }
