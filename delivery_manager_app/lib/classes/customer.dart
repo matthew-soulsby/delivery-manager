@@ -27,4 +27,12 @@ class Customer extends HiveObject {
       required this.suburb,
       required this.stateTerritory,
       required this.postcode});
+
+  String getAddressShort() {
+    String address = ((addressLine2 == null)
+        ? '$addressLine1 $suburb, $stateTerritory $postcode'
+        : '$addressLine2, $addressLine1 $suburb, $stateTerritory $postcode');
+
+    return address;
+  }
 }
