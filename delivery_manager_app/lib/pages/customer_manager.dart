@@ -7,6 +7,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 class CustomerManager extends StatelessWidget {
   const CustomerManager({super.key});
 
+  void addCustomer() {}
+
+  void editCustomer() {}
+
+  void deleteCustomer() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +61,7 @@ class CustomerManager extends StatelessWidget {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {},
+        child: const Icon(Icons.add),
       ),
     );
   }
