@@ -1,6 +1,6 @@
 import 'package:delivery_manager_app/assets/loading_spinner.dart';
 import 'package:delivery_manager_app/classes/customer.dart';
-import 'package:delivery_manager_app/forms/customer_add.dart';
+import 'package:delivery_manager_app/forms/customer_form.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -10,14 +10,14 @@ class CustomerManager extends StatelessWidget {
 
   void addCustomer(BuildContext context) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const CustomerAddScreen()));
+        MaterialPageRoute(builder: (context) => const CustomerFormScreen()));
   }
 
   void editCustomer(BuildContext context, int customerId) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => CustomerAddScreen(
+            builder: (context) => CustomerFormScreen(
                   id: customerId,
                 )));
   }
