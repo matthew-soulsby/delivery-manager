@@ -4,13 +4,17 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
 class CustomerAddScreen extends StatefulWidget {
-  const CustomerAddScreen({super.key});
+  const CustomerAddScreen({super.key, this.id});
+
+  final int? id;
 
   @override
   State<CustomerAddScreen> createState() => _CustomerAddScreenState();
 }
 
 class _CustomerAddScreenState extends State<CustomerAddScreen> {
+  var box = Hive.box<Customer>('customers');
+
   String _name = '';
   String _addressLine1 = '';
   String _addressLine2 = '';
@@ -18,9 +22,11 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
   String _stateTerritory = 'VIC';
   int _postcode = 0;
 
-  void submitForm() {
-    var box = Hive.box<Customer>('customers');
+  void submitForm(int? id) {
+    (id == null) ? addCustomer() : editCustomer(id);
+  }
 
+  void addCustomer() {
     Future<int> value = (_addressLine2 == ''
         ? box.add(Customer(
             name: _name,
@@ -37,6 +43,44 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
             addressLine2: _addressLine2)));
 
     value.then((value) => Navigator.pop(context));
+  }
+
+  void editCustomer(int id) {
+    Future<void> value = (_addressLine2 == ''
+        ? box.put(
+            id,
+            Customer(
+                name: _name,
+                addressLine1: _addressLine1,
+                suburb: _suburb,
+                stateTerritory: _stateTerritory,
+                postcode: _postcode))
+        : box.put(
+            id,
+            Customer(
+                name: _name,
+                addressLine1: _addressLine1,
+                suburb: _suburb,
+                stateTerritory: _stateTerritory,
+                postcode: _postcode,
+                addressLine2: _addressLine2)));
+
+    value.then((value) => Navigator.pop(context));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.id != null) {
+      Customer? editCustomer = box.get(widget.id);
+      _name = editCustomer?.name ?? '';
+      _addressLine1 = editCustomer?.addressLine1 ?? '';
+      _addressLine2 = editCustomer?.addressLine2 ?? '';
+      _suburb = editCustomer?.suburb ?? '';
+      _stateTerritory = editCustomer?.stateTerritory ?? '';
+      _postcode = editCustomer?.postcode ?? 0;
+    }
   }
 
   @override
@@ -67,6 +111,12 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
                       });
                     }
                   },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter customer's name";
+                    }
+                    return null;
+                  },
                 ),
               ),
               Padding(
@@ -83,6 +133,12 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
                         _addressLine1 = value;
                       });
                     }
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter address line 1';
+                    }
+                    return null;
                   },
                 ),
               ),
@@ -119,6 +175,12 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
                       });
                     }
                   },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter suburb';
+                    }
+                    return null;
+                  },
                 ),
               ),
               Padding(
@@ -154,6 +216,7 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  initialValue: (_postcode == 0) ? '' : _postcode.toString(),
                   decoration: const InputDecoration(
                       labelText: 'Postcode',
                       helperText: "Enter postcode",
@@ -165,12 +228,18 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
                       });
                     }
                   },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter postcode';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
               ),
               ElevatedButton(
-                onPressed: () => submitForm(),
+                onPressed: () => submitForm(widget.id),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
