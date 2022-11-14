@@ -8,11 +8,23 @@ import 'package:hive_flutter/hive_flutter.dart';
 class CustomerManager extends StatelessWidget {
   const CustomerManager({super.key});
 
-  void addCustomer() {}
+  void addCustomer(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const CustomerAddScreen()));
+  }
 
-  void editCustomer() {}
+  void editCustomer(BuildContext context, int customerId) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CustomerAddScreen(
+                  id: customerId,
+                )));
+  }
 
-  void deleteCustomer() {}
+  void deleteCustomer(Box<dynamic> box, int customerId) {
+    box.delete(customerId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +66,31 @@ class CustomerManager extends StatelessWidget {
                         child: ListTile(
                           title: Text(customer.name),
                           subtitle: Text(customer.getAddressShort()),
+                          trailing: PopupMenuButton<String>(
+                              // Callback that sets the selected popup menu item.
+                              onSelected: (String option) {
+                                switch (option) {
+                                  case 'Edit':
+                                    editCustomer(context, customer.key);
+                                    break;
+                                  case 'Delete':
+                                    deleteCustomer(box, customer.key);
+                                    break;
+                                  default:
+                                    break;
+                                }
+                              },
+                              itemBuilder: (BuildContext context) =>
+                                  <PopupMenuEntry<String>>[
+                                    const PopupMenuItem<String>(
+                                      value: 'Edit',
+                                      child: Text('Edit'),
+                                    ),
+                                    const PopupMenuItem<String>(
+                                      value: 'Delete',
+                                      child: Text('Delete'),
+                                    ),
+                                  ]),
                         ),
                       );
                     },
@@ -63,12 +100,7 @@ class CustomerManager extends StatelessWidget {
             );
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const CustomerAddScreen()));
-        },
+        onPressed: () => addCustomer(context),
         child: const Icon(Icons.add),
       ),
     );
