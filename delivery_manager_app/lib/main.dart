@@ -38,6 +38,8 @@ class AppScaffold extends StatefulWidget {
 class _AppScaffoldState extends State<AppScaffold> {
   final PageController _pageController = PageController();
 
+  bool _isPageViewAnimating = false;
+
   List<String> labelList = ['Deliveries', 'Customers', 'Reports'];
 
   List<Widget> pageList = [
@@ -49,10 +51,16 @@ class _AppScaffoldState extends State<AppScaffold> {
   int currentPageIndex = 0;
 
   void navigationItemSelected(int index) {
+    _isPageViewAnimating = true;
+
     setState(() {
       currentPageIndex = index;
-      _pageController.animateToPage(index,
-          duration: const Duration(milliseconds: 350), curve: Curves.ease);
+      _pageController
+          .animateToPage(index,
+              duration: const Duration(milliseconds: 350), curve: Curves.ease)
+          .then((_) {
+        _isPageViewAnimating = false;
+      });
     });
   }
 
@@ -69,6 +77,12 @@ class _AppScaffoldState extends State<AppScaffold> {
         title: Text(labelList[currentPageIndex]),
       ),
       body: PageView.builder(
+        onPageChanged: (index) {
+          if (_isPageViewAnimating) return;
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
         controller: _pageController,
         itemCount: pageList.length,
         itemBuilder: (BuildContext context, int index) {
