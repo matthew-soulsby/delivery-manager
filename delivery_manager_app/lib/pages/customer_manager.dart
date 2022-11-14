@@ -54,7 +54,7 @@ class CustomerManager extends StatelessWidget {
             if (snapshot.connectionState != ConnectionState.done) {
               return Center(
                 child: loadingSpinner(
-                  text: 'Loading inbox...',
+                  text: 'Loading customers...',
                   alignment: MainAxisAlignment.center,
                 ),
               );
