@@ -38,11 +38,7 @@ class AppScaffold extends StatefulWidget {
 class _AppScaffoldState extends State<AppScaffold> {
   final PageController _pageController = PageController();
 
-  List<String> labelList = [
-    "Today's Route",
-    'Manage Customers',
-    'Schedule Deliveries'
-  ];
+  List<String> labelList = ['Deliveries', 'Customers', 'Reports'];
 
   List<Widget> pageList = [
     const RouteManager(),
@@ -96,8 +92,8 @@ class _AppScaffoldState extends State<AppScaffold> {
             label: labelList[1],
           ),
           NavigationDestination(
-            selectedIcon: const Icon(Icons.edit_calendar),
-            icon: const Icon(Icons.edit_calendar_outlined),
+            selectedIcon: const Icon(Icons.file_open),
+            icon: const Icon(Icons.file_open_outlined),
             label: labelList[2],
           ),
         ],
