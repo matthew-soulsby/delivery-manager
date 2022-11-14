@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
-class CustomerAddScreen extends StatefulWidget {
-  const CustomerAddScreen({super.key, this.id});
+class CustomerFormScreen extends StatefulWidget {
+  const CustomerFormScreen({super.key, this.id});
 
   final int? id;
 
   @override
-  State<CustomerAddScreen> createState() => _CustomerAddScreenState();
+  State<CustomerFormScreen> createState() => _CustomerFormScreenState();
 }
 
-class _CustomerAddScreenState extends State<CustomerAddScreen> {
+class _CustomerFormScreenState extends State<CustomerFormScreen> {
   var box = Hive.box<Customer>('customers');
+
+  String _pageTitle = 'Add Customer';
 
   String _name = '';
   String _addressLine1 = '';
@@ -74,6 +76,8 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
 
     if (widget.id != null) {
       Customer? editCustomer = box.get(widget.id);
+      _pageTitle = 'Edit Customer';
+
       _name = editCustomer?.name ?? '';
       _addressLine1 = editCustomer?.addressLine1 ?? '';
       _addressLine2 = editCustomer?.addressLine2 ?? '';
@@ -87,7 +91,7 @@ class _CustomerAddScreenState extends State<CustomerAddScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Customer'),
+        title: Text(_pageTitle),
       ),
       body: Form(
           autovalidateMode: AutovalidateMode.always,
