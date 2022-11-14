@@ -22,8 +22,27 @@ class CustomerManager extends StatelessWidget {
                 )));
   }
 
-  void deleteCustomer(Box<dynamic> box, int customerId) {
-    box.delete(customerId);
+  void deleteCustomer(BuildContext context, Box<dynamic> box, int customerId) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Delete customer'),
+        content: const Text('Are you sure? Deleting a customer is permanent.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              box.delete(customerId);
+              Navigator.pop(context, 'OK');
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -74,7 +93,7 @@ class CustomerManager extends StatelessWidget {
                                     editCustomer(context, customer.key);
                                     break;
                                   case 'Delete':
-                                    deleteCustomer(box, customer.key);
+                                    deleteCustomer(context, box, customer.key);
                                     break;
                                   default:
                                     break;
