@@ -5,6 +5,7 @@ import 'package:delivery_manager_app/classes/item.dart';
 import 'package:delivery_manager_app/classes/delivery.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
 import 'package:delivery_manager_app/pages/report_manager.dart';
+import 'package:delivery_manager_app/pages/delivery_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -12,7 +13,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   Hive.initFlutter();
   registerHiveAdapters();
-  runApp(const DeliveryManager());
+  runApp(const DeliveryManagerApp());
 }
 
 void registerHiveAdapters() {
@@ -23,8 +24,8 @@ void registerHiveAdapters() {
   Hive.registerAdapter(RouteAdapter());
 }
 
-class DeliveryManager extends StatelessWidget {
-  const DeliveryManager({super.key});
+class DeliveryManagerApp extends StatelessWidget {
+  const DeliveryManagerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
