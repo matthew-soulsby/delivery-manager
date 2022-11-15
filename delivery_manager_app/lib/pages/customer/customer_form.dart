@@ -249,12 +249,13 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    Text('SUBMIT'),
+                    Text('Submit'),
                     SizedBox(
                       width: 12,
                     ),
                     Icon(
                       Icons.send_rounded,
+                      size: 20,
                     ),
                   ],
                 ),
