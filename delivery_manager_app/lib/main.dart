@@ -1,6 +1,6 @@
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:delivery_manager_app/classes/payment.dart';
-import 'package:delivery_manager_app/classes/route.dart';
+import 'package:delivery_manager_app/classes/delivery_route.dart';
 import 'package:delivery_manager_app/classes/item.dart';
 import 'package:delivery_manager_app/classes/delivery.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
@@ -21,7 +21,7 @@ void registerHiveAdapters() {
   Hive.registerAdapter(DeliveryAdapter());
   Hive.registerAdapter(ItemAdapter());
   Hive.registerAdapter(PaymentAdapter());
-  Hive.registerAdapter(RouteAdapter());
+  Hive.registerAdapter(DeliveryRouteAdapter());
 }
 
 class DeliveryManagerApp extends StatelessWidget {
