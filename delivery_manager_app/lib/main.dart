@@ -7,6 +7,7 @@ import 'package:delivery_manager_app/pages/customer_manager.dart';
 import 'package:delivery_manager_app/pages/report_manager.dart';
 import 'package:delivery_manager_app/pages/delivery_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -29,6 +30,10 @@ class DeliveryManagerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       title: 'Delivery Manager',
       theme: ThemeData(
