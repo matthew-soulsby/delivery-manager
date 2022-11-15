@@ -78,6 +78,7 @@ class CustomerManager extends StatelessWidget {
                   );
                 } else {
                   return ListView.builder(
+                    padding: const EdgeInsets.all(8),
                     itemCount: box.values.length,
                     itemBuilder: (context, index) {
                       Customer customer = box.getAt(index);
