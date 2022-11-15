@@ -1,3 +1,4 @@
+import 'package:delivery_manager_app/assets/button_style.dart';
 import 'package:delivery_manager_app/assets/loading_spinner.dart';
 import 'package:delivery_manager_app/classes/delivery_route.dart';
 import 'package:flutter/material.dart';
@@ -9,66 +10,81 @@ class DeliveryManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                child: const Text(
-                  "Today's Route",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+    return SingleChildScrollView(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MenuCard(
+              title: "Today's Deliveries",
+              description: 'View, optimise, and start your delivery run',
+              button: Directionality(
+                textDirection: TextDirection.rtl,
+                child: ElevatedButton.icon(
+                    style: indigoFilledButton(),
+                    onPressed: () {},
+                    label: const Text('View'),
+                    icon: const Icon(Icons.navigate_before_rounded)),
               ),
-              Card(
-                child: FutureBuilder(
-                    future: Hive.openBox<DeliveryRoute>('routes'),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done) {
-                        return Center(
-                          child: loadingSpinner(
-                            text: 'Loading route...',
-                            alignment: MainAxisAlignment.center,
-                          ),
-                        );
-                      }
-
-                      // If an error occurred, display it.
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text(snapshot.error.toString(),
-                              style: const TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold)),
-                        );
-                      }
-
-                      return ValueListenableBuilder<Box>(
-                        valueListenable:
-                            Hive.box<DeliveryRoute>('routes').listenable(),
-                        builder: (context, box, widget) {
-                          if (box.values.isEmpty) {
-                            return const Center(
-                              child: Text('No routes found'),
-                            );
-                          } else {
-                            return const Center(
-                              child: Text('No routes found'),
-                            );
-                          }
-                        },
-                      );
-                    }),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            MenuCard(
+              title: "Schedule Deliveries",
+              description:
+                  'Schedule deliveries for today’s route, or for future deliveries',
+              button: Directionality(
+                textDirection: TextDirection.rtl,
+                child: ElevatedButton.icon(
+                    style: indigoFilledButton(),
+                    onPressed: () {},
+                    label: const Text('Schedule'),
+                    icon: const Icon(Icons.navigate_before_rounded)),
               ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => {},
-        label: const Text('Schedule Delivery'),
-        icon: const Icon(Icons.edit_calendar),
+            ),
+          ],
+        ));
+  }
+}
+
+class MenuCard extends StatelessWidget {
+  const MenuCard({
+    Key? key,
+    required this.title,
+    required this.description,
+    required this.button,
+  }) : super(key: key);
+
+  final String title;
+  final String description;
+  final Widget button;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: Container(
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(description),
+          const SizedBox(
+            height: 8,
+          ),
+          Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(width: 125, child: button)),
+        ],
       ),
-    );
+    ));
   }
 }
