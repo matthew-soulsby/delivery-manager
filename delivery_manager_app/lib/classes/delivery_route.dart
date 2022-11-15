@@ -3,10 +3,10 @@ import 'payment.dart';
 import 'delivery.dart';
 import 'package:hive/hive.dart';
 
-part 'route.g.dart';
+part 'delivery_route.g.dart';
 
 @HiveType(typeId: 4)
-class Route extends HiveObject {
+class DeliveryRoute extends HiveObject {
   @HiveField(0)
   DateTime date;
 
@@ -19,7 +19,7 @@ class Route extends HiveObject {
   @HiveField(3)
   List<int> indexesOfCompleted;
 
-  Route(
+  DeliveryRoute(
       {required this.date,
       required this.deliveries,
       required this.optimised,

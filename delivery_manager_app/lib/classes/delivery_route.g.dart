@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'route.dart';
+part of 'delivery_route.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class RouteAdapter extends TypeAdapter<Route> {
+class DeliveryRouteAdapter extends TypeAdapter<DeliveryRoute> {
   @override
   final int typeId = 4;
 
   @override
-  Route read(BinaryReader reader) {
+  DeliveryRoute read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Route(
+    return DeliveryRoute(
       date: fields[0] as DateTime,
       deliveries: (fields[1] as HiveList).castHiveList(),
       optimised: fields[2] as bool,
@@ -25,7 +25,7 @@ class RouteAdapter extends TypeAdapter<Route> {
   }
 
   @override
-  void write(BinaryWriter writer, Route obj) {
+  void write(BinaryWriter writer, DeliveryRoute obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -44,7 +44,7 @@ class RouteAdapter extends TypeAdapter<Route> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is RouteAdapter &&
+      other is DeliveryRouteAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
