@@ -1,6 +1,6 @@
 import 'package:delivery_manager_app/assets/loading_spinner.dart';
 import 'package:delivery_manager_app/classes/customer.dart';
-import 'package:delivery_manager_app/forms/customer_form.dart';
+import 'package:delivery_manager_app/pages/customer/customer_form.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
