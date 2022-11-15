@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class RouteManager extends StatelessWidget {
-  const RouteManager({super.key});
+class ReportManager extends StatelessWidget {
+  const ReportManager({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
+      color: Colors.blue,
       alignment: Alignment.center,
-      child: const Text('Route Manager'),
+      child: const Text('Report Manager'),
     );
   }
 }

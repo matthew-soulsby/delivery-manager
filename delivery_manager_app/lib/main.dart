@@ -1,7 +1,7 @@
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
-import 'package:delivery_manager_app/pages/route_manager.dart';
-import 'package:delivery_manager_app/pages/schedule_manager.dart';
+import 'package:delivery_manager_app/pages/delivery_manager.dart';
+import 'package:delivery_manager_app/pages/report_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -43,9 +43,9 @@ class _AppScaffoldState extends State<AppScaffold> {
   List<String> labelList = ['Deliveries', 'Customers', 'Reports'];
 
   List<Widget> pageList = [
-    const RouteManager(),
+    const DeliveryManager(),
     const CustomerManager(),
-    const ScheduleManager(),
+    const ReportManager(),
   ];
 
   int currentPageIndex = 0;

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ScheduleManager extends StatelessWidget {
-  const ScheduleManager({super.key});
+class DeliveryManager extends StatelessWidget {
+  const DeliveryManager({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
+      color: Colors.red,
       alignment: Alignment.center,
-      child: const Text('Schedule Manager'),
+      child: const Text('Delivery Manager'),
     );
   }
 }
