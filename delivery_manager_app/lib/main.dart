@@ -30,10 +30,12 @@ class DeliveryManagerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Force portrait
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
+
     return MaterialApp(
       title: 'Delivery Manager',
       theme: ThemeData(
