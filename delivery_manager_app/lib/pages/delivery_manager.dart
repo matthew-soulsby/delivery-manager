@@ -12,39 +12,56 @@ class DeliveryManager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MenuCard(
-              title: "Today's Deliveries",
-              description: 'View, optimise, and start your delivery run',
-              button: Directionality(
-                textDirection: TextDirection.rtl,
-                child: ElevatedButton.icon(
-                    style: indigoFilledButton(),
-                    onPressed: () {},
-                    label: const Text('View'),
-                    icon: const Icon(Icons.navigate_before_rounded)),
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MenuCard(
+            title: "Today's Deliveries",
+            description: 'View, optimise, and start your delivery run',
+            button: ElevatedButton(
+              style: indigoFilledButton(),
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: const [
+                  SizedBox(),
+                  Text('View'),
+                  SizedBox(),
+                  Icon(
+                    Icons.navigate_next_rounded,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            MenuCard(
-              title: "Schedule Deliveries",
-              description:
-                  'Schedule deliveries for today’s route, or for future deliveries',
-              button: Directionality(
-                textDirection: TextDirection.rtl,
-                child: ElevatedButton.icon(
-                    style: indigoFilledButton(),
-                    onPressed: () {},
-                    label: const Text('Schedule'),
-                    icon: const Icon(Icons.navigate_before_rounded)),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          MenuCard(
+            title: "Schedule Deliveries",
+            description:
+                'Schedule deliveries for today’s route, or for future deliveries',
+            button: ElevatedButton(
+              style: indigoFilledButton(),
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: const [
+                  SizedBox(),
+                  Text('Schedule'),
+                  SizedBox(),
+                  Icon(
+                    Icons.navigate_next_rounded,
+                  ),
+                ],
               ),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
