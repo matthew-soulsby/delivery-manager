@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 
 part 'route.g.dart';
 
-@HiveType(typeId: 3)
+@HiveType(typeId: 4)
 class Route extends HiveObject {
   @HiveField(0)
   DateTime date;
