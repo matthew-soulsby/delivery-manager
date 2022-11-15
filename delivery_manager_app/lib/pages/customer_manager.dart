@@ -85,31 +85,37 @@ class CustomerManager extends StatelessWidget {
                         child: ListTile(
                           title: Text(customer.name),
                           subtitle: Text(customer.getAddressShort()),
-                          trailing: PopupMenuButton<String>(
-                              // Callback that sets the selected popup menu item.
-                              onSelected: (String option) {
-                                switch (option) {
-                                  case 'Edit':
-                                    editCustomer(context, customer.key);
-                                    break;
-                                  case 'Delete':
-                                    deleteCustomer(context, box, customer.key);
-                                    break;
-                                  default:
-                                    break;
-                                }
-                              },
-                              itemBuilder: (BuildContext context) =>
-                                  <PopupMenuEntry<String>>[
-                                    const PopupMenuItem<String>(
-                                      value: 'Edit',
-                                      child: Text('Edit'),
-                                    ),
-                                    const PopupMenuItem<String>(
-                                      value: 'Delete',
-                                      child: Text('Delete'),
-                                    ),
-                                  ]),
+                          trailing: Theme(
+                              data: Theme.of(context)
+                                  .copyWith(useMaterial3: false),
+                              child: PopupMenuButton<String>(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  // Callback that sets the selected popup menu item.
+                                  onSelected: (String option) {
+                                    switch (option) {
+                                      case 'Edit':
+                                        editCustomer(context, customer.key);
+                                        break;
+                                      case 'Delete':
+                                        deleteCustomer(
+                                            context, box, customer.key);
+                                        break;
+                                      default:
+                                        break;
+                                    }
+                                  },
+                                  itemBuilder: (BuildContext context) =>
+                                      <PopupMenuEntry<String>>[
+                                        const PopupMenuItem<String>(
+                                          value: 'Edit',
+                                          child: Text('Edit'),
+                                        ),
+                                        const PopupMenuItem<String>(
+                                          value: 'Delete',
+                                          child: Text('Delete'),
+                                        ),
+                                      ])),
                         ),
                       );
                     },
