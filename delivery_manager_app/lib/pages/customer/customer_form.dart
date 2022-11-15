@@ -1,3 +1,4 @@
+import 'package:delivery_manager_app/assets/button_style.dart';
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -243,16 +244,17 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
                 ),
               ),
               ElevatedButton(
+                style: indigoFilledButton(),
                 onPressed: () => submitForm(widget.id),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
                     Text('SUBMIT'),
                     SizedBox(
-                      width: 5,
+                      width: 12,
                     ),
                     Icon(
-                      Icons.send,
+                      Icons.send_rounded,
                     ),
                   ],
                 ),
