@@ -1,6 +1,9 @@
 import 'package:delivery_manager_app/classes/customer.dart';
+import 'package:delivery_manager_app/classes/payment.dart';
+import 'package:delivery_manager_app/classes/route.dart';
+import 'package:delivery_manager_app/classes/item.dart';
+import 'package:delivery_manager_app/classes/delivery.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
-import 'package:delivery_manager_app/pages/delivery_manager.dart';
 import 'package:delivery_manager_app/pages/report_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -8,8 +11,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   Hive.initFlutter();
-  Hive.registerAdapter(CustomerAdapter());
+  registerHiveAdapters();
   runApp(const DeliveryManager());
+}
+
+void registerHiveAdapters() {
+  Hive.registerAdapter(CustomerAdapter());
+  Hive.registerAdapter(DeliveryAdapter());
+  Hive.registerAdapter(ItemAdapter());
+  Hive.registerAdapter(PaymentAdapter());
+  Hive.registerAdapter(RouteAdapter());
 }
 
 class DeliveryManager extends StatelessWidget {
