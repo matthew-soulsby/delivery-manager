@@ -17,7 +17,7 @@ class DeliveryManager extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           MenuCard(
-            title: "Today's Deliveries",
+            title: "Today's Route",
             description: 'View, optimise, and start your delivery run',
             button: ElevatedButton(
               style: filledButtonPrimary(context),
