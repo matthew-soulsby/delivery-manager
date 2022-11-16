@@ -28,7 +28,6 @@ class DeliveryManager extends StatelessWidget {
                 children: const [
                   SizedBox(),
                   Text('View'),
-                  SizedBox(),
                   Icon(
                     Icons.navigate_next_rounded,
                   ),
@@ -52,7 +51,6 @@ class DeliveryManager extends StatelessWidget {
                 children: const [
                   SizedBox(),
                   Text('Schedule'),
-                  SizedBox(),
                   Icon(
                     Icons.navigate_next_rounded,
                   ),
