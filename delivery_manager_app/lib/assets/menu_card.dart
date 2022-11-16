@@ -15,28 +15,30 @@ class MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: Container(
-      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(description),
-          const SizedBox(
-            height: 8,
-          ),
-          Align(
-              alignment: Alignment.centerRight,
-              child: SizedBox(width: 125, child: button)),
-        ],
+      shadowColor: Colors.transparent,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(description),
+            const SizedBox(
+              height: 8,
+            ),
+            Align(
+                alignment: Alignment.centerRight,
+                child: SizedBox(width: 125, child: button)),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

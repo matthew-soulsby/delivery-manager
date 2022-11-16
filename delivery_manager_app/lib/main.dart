@@ -6,6 +6,7 @@ import 'package:delivery_manager_app/classes/delivery.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
 import 'package:delivery_manager_app/pages/report_manager.dart';
 import 'package:delivery_manager_app/pages/delivery_manager.dart';
+import 'package:delivery_manager_app/themes/color_schemes.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -38,10 +39,8 @@ class DeliveryManagerApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Delivery Manager',
-      theme: ThemeData(
-        colorSchemeSeed: Color.fromARGB(255, 0, 132, 255),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: const AppScaffold(),
     );
   }

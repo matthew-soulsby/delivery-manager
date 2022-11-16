@@ -1,6 +1,7 @@
 import 'package:delivery_manager_app/assets/loading_spinner.dart';
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:delivery_manager_app/pages/customer/customer_form.dart';
+import 'package:delivery_manager_app/themes/button_style.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -126,8 +127,10 @@ class CustomerManager extends StatelessWidget {
             );
           }),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: getPrimaryColors(context)[0],
+        foregroundColor: getPrimaryColors(context)[1],
         onPressed: () => addCustomer(context),
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_rounded),
       ),
     );
   }
