@@ -15,7 +15,8 @@ class MenuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shadowColor: Colors.transparent,
+      elevation: 0,
+      color: Theme.of(context).colorScheme.surfaceVariant,
       child: Container(
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
         child: Column(

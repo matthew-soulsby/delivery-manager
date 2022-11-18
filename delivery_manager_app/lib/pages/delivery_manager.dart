@@ -19,7 +19,7 @@ class DeliveryManager extends StatelessWidget {
           MenuCard(
             title: "Today's Route",
             description: 'View, optimise, and start your delivery run',
-            button: ElevatedButton(
+            button: TextButton(
               style: filledButtonPrimary(context),
               onPressed: () {},
               child: Row(
