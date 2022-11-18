@@ -10,6 +10,8 @@ enum Recurrance { everyWeek, everySecondWeek, everyThirdWeek, everyFourthWeek }
 @collection
 class Delivery {
   Id? id;
+
+  @Index()
   DateTime? date;
 
   @Enumerated(EnumType.ordinal32)

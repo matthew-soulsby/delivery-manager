@@ -39,6 +39,7 @@ dependencies:
   analyzer: ^5.2.0
   isar: ^3.0.5
   isar_flutter_libs: ^3.0.5
+  table_calendar: ^3.0.8
 
 dev_dependencies:
   flutter_test:

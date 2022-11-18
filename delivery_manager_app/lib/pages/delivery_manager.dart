@@ -1,3 +1,4 @@
+import 'package:delivery_manager_app/pages/delivery/delivery_view.dart';
 import 'package:delivery_manager_app/themes/button_style.dart';
 import 'package:delivery_manager_app/assets/loading_spinner.dart';
 import 'package:delivery_manager_app/assets/menu_card.dart';
@@ -44,7 +45,14 @@ class DeliveryManager extends StatelessWidget {
                 "Schedule deliveries for today's route, or for future deliveries",
             button: TextButton(
               style: filledButtonPrimary(context),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeliveryView(isar: isar),
+                  ),
+                );
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
