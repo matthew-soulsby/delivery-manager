@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 
 class CustomerFormScreen extends StatefulWidget {
-  const CustomerFormScreen({super.key, required this.isar, this.id});
+  const CustomerFormScreen({super.key, required this.isar, this.customer});
 
   final Isar isar;
 
-  final int? id;
+  final Customer? customer;
 
   @override
   State<CustomerFormScreen> createState() => _CustomerFormScreenState();
@@ -27,9 +27,9 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
   String _stateTerritory = 'VIC';
   int _postcode = 0;
 
-  void submitForm(int? id) {
+  void submitForm(Customer? customer) {
     if (_formKey.currentState!.validate()) {
-      (id == null) ? addCustomer() : editCustomer(id);
+      (customer == null) ? addCustomer() : editCustomer(customer);
     }
   }
 
@@ -47,9 +47,8 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
     }).then((value) => Navigator.pop(context));
   }
 
-  void editCustomer(int id) async {
-    final customer = Customer()
-      ..id = id
+  void editCustomer(Customer customer) async {
+    customer
       ..name = _name
       ..addressLine1 = _addressLine1
       ..suburb = _suburb
@@ -66,17 +65,15 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
   void initState() {
     super.initState();
 
-    if (widget.id != null) {
-      widget.isar.customers.get(widget.id!).then((editCustomer) {
-        _pageTitle = 'Edit Customer';
+    if (widget.customer != null) {
+      _pageTitle = 'Edit Customer';
 
-        _name = editCustomer?.name ?? '';
-        _addressLine1 = editCustomer?.addressLine1 ?? '';
-        _addressLine2 = editCustomer?.addressLine2 ?? '';
-        _suburb = editCustomer?.suburb ?? '';
-        _stateTerritory = editCustomer?.stateTerritory ?? '';
-        _postcode = editCustomer?.postcode ?? 0;
-      });
+      _name = widget.customer?.name ?? '';
+      _addressLine1 = widget.customer?.addressLine1 ?? '';
+      _addressLine2 = widget.customer?.addressLine2 ?? '';
+      _suburb = widget.customer?.suburb ?? '';
+      _stateTerritory = widget.customer?.stateTerritory ?? '';
+      _postcode = widget.customer?.postcode ?? 0;
     }
   }
 
@@ -237,7 +234,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
             ),
             TextButton(
               style: filledButtonPrimary(context),
-              onPressed: () => submitForm(widget.id),
+              onPressed: () => submitForm(widget.customer),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                 child: Row(

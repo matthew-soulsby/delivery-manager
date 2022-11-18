@@ -26,19 +26,19 @@ class _CustomerManagerState extends State<CustomerManager> {
     );
   }
 
-  void editCustomer(BuildContext context, int customerId) {
+  void editCustomer(BuildContext context, Customer customer) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CustomerFormScreen(
-          id: customerId,
+          customer: customer,
           isar: widget.isar,
         ),
       ),
     );
   }
 
-  void deleteCustomer(BuildContext context, int customerId) {
+  void deleteCustomer(BuildContext context, Customer customer) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -52,7 +52,7 @@ class _CustomerManagerState extends State<CustomerManager> {
           TextButton(
             onPressed: () {
               widget.isar.writeTxn(() async {
-                await widget.isar.customers.delete(customerId);
+                await widget.isar.customers.delete(customer.id!);
               });
               Navigator.pop(context, 'OK');
             },
@@ -99,6 +99,8 @@ class _CustomerManagerState extends State<CustomerManager> {
                 Customer customer = _customerList[index];
 
                 return Card(
+                  elevation: 0,
+                  color: Theme.of(context).colorScheme.surfaceVariant,
                   child: ListTile(
                     title: Text(customer.name ?? ''),
                     subtitle: Text(customer.getAddressShort()),
@@ -111,10 +113,10 @@ class _CustomerManagerState extends State<CustomerManager> {
                             onSelected: (String option) {
                               switch (option) {
                                 case 'Edit':
-                                  editCustomer(context, customer.id ?? 0);
+                                  editCustomer(context, customer);
                                   break;
                                 case 'Delete':
-                                  deleteCustomer(context, customer.id ?? 0);
+                                  deleteCustomer(context, customer);
                                   break;
                                 default:
                                   break;
