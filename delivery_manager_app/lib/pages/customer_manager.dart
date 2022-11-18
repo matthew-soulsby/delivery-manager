@@ -15,7 +15,7 @@ class CustomerManager extends StatefulWidget {
 }
 
 class _CustomerManagerState extends State<CustomerManager> {
-  late List<Customer> _customerList;
+  List<Customer> _customerList = [];
 
   void addCustomer(BuildContext context) {
     Navigator.push(
@@ -64,6 +64,8 @@ class _CustomerManagerState extends State<CustomerManager> {
   }
 
   void refreshCustomerList() {
+    if (!mounted) return;
+
     widget.isar.customers.where().findAll().then((newList) {
       setState(() {
         _customerList = newList;
@@ -74,6 +76,9 @@ class _CustomerManagerState extends State<CustomerManager> {
   @override
   void initState() {
     super.initState();
+
+    refreshCustomerList();
+
     Stream<void> customersChanged = widget.isar.customers.watchLazy();
     customersChanged.listen((value) {
       refreshCustomerList();
@@ -83,80 +88,53 @@ class _CustomerManagerState extends State<CustomerManager> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: widget.isar.customers.where().findAll(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return Center(
-              child: loadingSpinner(
-                text: 'Loading customers...',
-                alignment: MainAxisAlignment.center,
-              ),
-            );
-          }
-
-          // If an error occurred, display it.
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error.toString(),
-                  style: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.bold)),
-            );
-          }
-
-          _customerList = snapshot.requireData;
-
-          if (_customerList.isEmpty) {
-            return const Center(
+      body: (_customerList.isEmpty)
+          ? const Center(
               child: Text('No customers found'),
-            );
-          }
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: _customerList.length,
+              itemBuilder: (context, index) {
+                Customer customer = _customerList[index];
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: _customerList.length,
-            itemBuilder: (context, index) {
-              Customer customer = _customerList[index];
-
-              return Card(
-                child: ListTile(
-                  title: Text(customer.name ?? ''),
-                  subtitle: Text(customer.getAddressShort()),
-                  trailing: Theme(
-                      data: Theme.of(context).copyWith(useMaterial3: false),
-                      child: PopupMenuButton<String>(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          // Callback that sets the selected popup menu item.
-                          onSelected: (String option) {
-                            switch (option) {
-                              case 'Edit':
-                                editCustomer(context, customer.id ?? 0);
-                                break;
-                              case 'Delete':
-                                deleteCustomer(context, customer.id ?? 0);
-                                break;
-                              default:
-                                break;
-                            }
-                          },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<String>>[
-                                const PopupMenuItem<String>(
-                                  value: 'Edit',
-                                  child: Text('Edit'),
-                                ),
-                                const PopupMenuItem<String>(
-                                  value: 'Delete',
-                                  child: Text('Delete'),
-                                ),
-                              ])),
-                ),
-              );
-            },
-          );
-        },
-      ),
+                return Card(
+                  child: ListTile(
+                    title: Text(customer.name ?? ''),
+                    subtitle: Text(customer.getAddressShort()),
+                    trailing: Theme(
+                        data: Theme.of(context).copyWith(useMaterial3: false),
+                        child: PopupMenuButton<String>(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            // Callback that sets the selected popup menu item.
+                            onSelected: (String option) {
+                              switch (option) {
+                                case 'Edit':
+                                  editCustomer(context, customer.id ?? 0);
+                                  break;
+                                case 'Delete':
+                                  deleteCustomer(context, customer.id ?? 0);
+                                  break;
+                                default:
+                                  break;
+                              }
+                            },
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<String>>[
+                                  const PopupMenuItem<String>(
+                                    value: 'Edit',
+                                    child: Text('Edit'),
+                                  ),
+                                  const PopupMenuItem<String>(
+                                    value: 'Delete',
+                                    child: Text('Delete'),
+                                  ),
+                                ])),
+                  ),
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: getPrimaryColors(context)[0],
         foregroundColor: getPrimaryColors(context)[1],
