@@ -1,20 +1,14 @@
-import 'package:hive/hive.dart';
+import 'package:isar/isar.dart';
 
 part 'item.g.dart';
 
-@HiveType(typeId: 1)
-class Item extends HiveObject {
-  @HiveField(0)
-  String name;
+@embedded
+class Item {
+  String? name;
 
-  @HiveField(1)
-  String? PLU;
+  String? itemPLU;
 
-  @HiveField(2)
   String? barcode;
 
-  @HiveField(3)
-  int priceCents;
-
-  Item({required this.name, this.PLU, this.barcode, required this.priceCents});
+  int? priceCents;
 }

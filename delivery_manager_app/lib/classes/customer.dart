@@ -1,34 +1,22 @@
-import 'package:hive/hive.dart';
+import 'package:isar/isar.dart';
 
 part 'customer.g.dart';
 
-@HiveType(typeId: 0)
-class Customer extends HiveObject {
-  @HiveField(0)
-  String name;
+@collection
+class Customer {
+  Id? id;
 
-  @HiveField(1)
-  String addressLine1;
+  String? name;
 
-  @HiveField(2)
+  String? addressLine1;
+
   String? addressLine2;
 
-  @HiveField(3)
-  String suburb;
+  String? suburb;
 
-  @HiveField(4)
-  String stateTerritory;
+  String? stateTerritory;
 
-  @HiveField(5)
-  int postcode;
-
-  Customer(
-      {required this.name,
-      required this.addressLine1,
-      this.addressLine2,
-      required this.suburb,
-      required this.stateTerritory,
-      required this.postcode});
+  int? postcode;
 
   String getAddressShort() {
     String address = ((addressLine2 == null)

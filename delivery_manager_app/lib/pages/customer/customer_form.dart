@@ -2,10 +2,12 @@ import 'package:delivery_manager_app/themes/button_style.dart';
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
+import 'package:isar/isar.dart';
 
 class CustomerFormScreen extends StatefulWidget {
-  const CustomerFormScreen({super.key, this.id});
+  const CustomerFormScreen({super.key, required this.isar, this.id});
+
+  final Isar isar;
 
   final int? id;
 
@@ -14,8 +16,6 @@ class CustomerFormScreen extends StatefulWidget {
 }
 
 class _CustomerFormScreenState extends State<CustomerFormScreen> {
-  var box = Hive.box<Customer>('customers');
-
   final _formKey = GlobalKey<FormState>();
 
   String _pageTitle = 'Add Customer';
@@ -33,46 +33,33 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
     }
   }
 
-  void addCustomer() {
-    Future<int> value = (_addressLine2 == ''
-        ? box.add(Customer(
-            name: _name,
-            addressLine1: _addressLine1,
-            suburb: _suburb,
-            stateTerritory: _stateTerritory,
-            postcode: _postcode))
-        : box.add(Customer(
-            name: _name,
-            addressLine1: _addressLine1,
-            suburb: _suburb,
-            stateTerritory: _stateTerritory,
-            postcode: _postcode,
-            addressLine2: _addressLine2)));
+  void addCustomer() async {
+    final customer = Customer()
+      ..name = _name
+      ..addressLine1 = _addressLine1
+      ..suburb = _suburb
+      ..stateTerritory = _stateTerritory
+      ..postcode = _postcode
+      ..addressLine2 = _addressLine2.isNotEmpty ? _addressLine2 : null;
 
-    value.then((value) => Navigator.pop(context));
+    widget.isar.writeTxn(() async {
+      await widget.isar.customers.put(customer);
+    }).then((value) => Navigator.pop(context));
   }
 
-  void editCustomer(int id) {
-    Future<void> value = (_addressLine2 == ''
-        ? box.put(
-            id,
-            Customer(
-                name: _name,
-                addressLine1: _addressLine1,
-                suburb: _suburb,
-                stateTerritory: _stateTerritory,
-                postcode: _postcode))
-        : box.put(
-            id,
-            Customer(
-                name: _name,
-                addressLine1: _addressLine1,
-                suburb: _suburb,
-                stateTerritory: _stateTerritory,
-                postcode: _postcode,
-                addressLine2: _addressLine2)));
+  void editCustomer(int id) async {
+    final customer = Customer()
+      ..id = id
+      ..name = _name
+      ..addressLine1 = _addressLine1
+      ..suburb = _suburb
+      ..stateTerritory = _stateTerritory
+      ..postcode = _postcode
+      ..addressLine2 = _addressLine2.isNotEmpty ? _addressLine2 : null;
 
-    value.then((value) => Navigator.pop(context));
+    widget.isar.writeTxn(() async {
+      await widget.isar.customers.put(customer);
+    }).then((value) => Navigator.pop(context));
   }
 
   @override
@@ -80,15 +67,16 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
     super.initState();
 
     if (widget.id != null) {
-      Customer? editCustomer = box.get(widget.id);
-      _pageTitle = 'Edit Customer';
+      widget.isar.customers.get(widget.id!).then((editCustomer) {
+        _pageTitle = 'Edit Customer';
 
-      _name = editCustomer?.name ?? '';
-      _addressLine1 = editCustomer?.addressLine1 ?? '';
-      _addressLine2 = editCustomer?.addressLine2 ?? '';
-      _suburb = editCustomer?.suburb ?? '';
-      _stateTerritory = editCustomer?.stateTerritory ?? '';
-      _postcode = editCustomer?.postcode ?? 0;
+        _name = editCustomer?.name ?? '';
+        _addressLine1 = editCustomer?.addressLine1 ?? '';
+        _addressLine2 = editCustomer?.addressLine2 ?? '';
+        _suburb = editCustomer?.suburb ?? '';
+        _stateTerritory = editCustomer?.stateTerritory ?? '';
+        _postcode = editCustomer?.postcode ?? 0;
+      });
     }
   }
 

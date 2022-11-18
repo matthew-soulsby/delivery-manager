@@ -1,6 +1,5 @@
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:delivery_manager_app/classes/payment.dart';
-import 'package:delivery_manager_app/classes/delivery_route.dart';
 import 'package:delivery_manager_app/classes/item.dart';
 import 'package:delivery_manager_app/classes/delivery.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
@@ -9,25 +8,19 @@ import 'package:delivery_manager_app/pages/delivery_manager.dart';
 import 'package:delivery_manager_app/themes/color_schemes.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
 
 void main() async {
-  Hive.initFlutter();
-  registerHiveAdapters();
-  runApp(const DeliveryManagerApp());
-}
-
-void registerHiveAdapters() {
-  Hive.registerAdapter(CustomerAdapter());
-  Hive.registerAdapter(DeliveryAdapter());
-  Hive.registerAdapter(ItemAdapter());
-  Hive.registerAdapter(PaymentAdapter());
-  Hive.registerAdapter(DeliveryRouteAdapter());
+  final isar = await Isar.open([CustomerSchema, DeliverySchema]);
+  runApp(DeliveryManagerApp(
+    isar: isar,
+  ));
 }
 
 class DeliveryManagerApp extends StatelessWidget {
-  const DeliveryManagerApp({super.key});
+  const DeliveryManagerApp({super.key, required this.isar});
+
+  final Isar isar;
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +40,15 @@ class DeliveryManagerApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: darkColorScheme,
       ),
-      home: const AppScaffold(),
+      home: AppScaffold(isar: isar),
     );
   }
 }
 
 class AppScaffold extends StatefulWidget {
-  const AppScaffold({super.key});
+  const AppScaffold({super.key, required this.isar});
+
+  final Isar isar;
 
   @override
   State<AppScaffold> createState() => _AppScaffoldState();
@@ -65,12 +60,6 @@ class _AppScaffoldState extends State<AppScaffold> {
   bool _isPageViewAnimating = false;
 
   List<String> labelList = ['Deliveries', 'Customers', 'Reports'];
-
-  List<Widget> pageList = [
-    const DeliveryManager(),
-    const CustomerManager(),
-    const ReportManager(),
-  ];
 
   int currentPageIndex = 0;
 
@@ -100,7 +89,7 @@ class _AppScaffoldState extends State<AppScaffold> {
       appBar: AppBar(
         title: Text(labelList[currentPageIndex]),
       ),
-      body: PageView.builder(
+      body: PageView(
         onPageChanged: (index) {
           if (_isPageViewAnimating) return;
           setState(() {
@@ -108,10 +97,11 @@ class _AppScaffoldState extends State<AppScaffold> {
           });
         },
         controller: _pageController,
-        itemCount: pageList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return pageList[index];
-        },
+        children: [
+          DeliveryManager(isar: widget.isar),
+          CustomerManager(isar: widget.isar),
+          ReportManager(isar: widget.isar),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
