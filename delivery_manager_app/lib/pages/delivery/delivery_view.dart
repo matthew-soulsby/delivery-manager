@@ -29,8 +29,10 @@ class _DeliveryViewState extends State<DeliveryView> {
         .subtract(const Duration(days: 1));
 
     return widget.isar.deliverys
-        .where()
+        .filter()
         .dateGreaterThan(dateStripped)
+        .or()
+        .recurranceIsNotNull()
         .findAll();
   }
 
