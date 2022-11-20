@@ -113,7 +113,7 @@ class _DeliveryViewState extends State<DeliveryView> {
         title: const Text('Schedule Deliveries'),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         child: FutureBuilder(
           future: deliveryFuture,
           builder: (context, snapshot) {
@@ -148,14 +148,29 @@ class _DeliveryViewState extends State<DeliveryView> {
               child: Column(
                 children: [
                   TableCalendar(
-                    availableGestures: AvailableGestures.horizontalSwipe,
-                    availableCalendarFormats: const {
-                      CalendarFormat.month: 'Month'
-                    },
                     firstDay: DateTime.now(),
                     lastDay: DateTime.now().add(const Duration(days: 366)),
                     focusedDay: _focusedDay,
                     calendarFormat: _calendarFormat,
+                    availableGestures: AvailableGestures.horizontalSwipe,
+                    availableCalendarFormats: const {
+                      CalendarFormat.month: 'Month'
+                    },
+                    calendarStyle: CalendarStyle(
+                      // Weekend dates color (Sat & Sun Column)
+                      weekendTextStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary),
+                      // highlighted color for today
+                      todayDecoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        shape: BoxShape.circle,
+                      ),
+                      // highlighted color for selected day
+                      selectedDecoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.tertiary,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
                     selectedDayPredicate: (day) {
                       // Use `selectedDayPredicate` to determine which day is currently selected.
                       // If this returns true, then `day` will be marked as selected.
