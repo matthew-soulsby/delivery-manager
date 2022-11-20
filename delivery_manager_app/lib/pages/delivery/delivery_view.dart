@@ -219,66 +219,68 @@ class _DeliveryViewState extends State<DeliveryView> {
                       ? const Center(
                           child: Text('No deliveries scheduled'),
                         )
-                      : Column(children: [
-                          const Text('Scheduled Deliveries:'),
-                          ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(8),
-                            itemCount: deliveriesOnSelectedDate.length,
-                            itemBuilder: (context, index) {
-                              Delivery delivery =
-                                  deliveriesOnSelectedDate[index];
+                      : Column(
+                          children: [
+                            const Text('Scheduled Deliveries:'),
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(8),
+                              itemCount: deliveriesOnSelectedDate.length,
+                              itemBuilder: (context, index) {
+                                Delivery delivery =
+                                    deliveriesOnSelectedDate[index];
 
-                              return Card(
-                                elevation: 0,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .surfaceVariant,
-                                child: ListTile(
-                                  title:
-                                      Text(delivery.customer.value?.name ?? ''),
-                                  subtitle: Text(delivery.customer.value
-                                          ?.getAddressShort() ??
-                                      ''),
-                                  trailing: Theme(
-                                    data: Theme.of(context)
-                                        .copyWith(useMaterial3: false),
-                                    child: PopupMenuButton<String>(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      // Callback that sets the selected popup menu item.
-                                      onSelected: (String option) {
-                                        switch (option) {
-                                          case 'Edit':
-                                            // TODO: Edit Function
-                                            break;
-                                          case 'Delete':
-                                            // TODO: Delete Function
-                                            break;
-                                          default:
-                                            break;
-                                        }
-                                      },
-                                      itemBuilder: (BuildContext context) =>
-                                          <PopupMenuEntry<String>>[
-                                        const PopupMenuItem<String>(
-                                          value: 'Edit',
-                                          child: Text('Edit'),
-                                        ),
-                                        const PopupMenuItem<String>(
-                                          value: 'Delete',
-                                          child: Text('Delete'),
-                                        ),
-                                      ],
+                                return Card(
+                                  elevation: 0,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surfaceVariant,
+                                  child: ListTile(
+                                    title: Text(
+                                        delivery.customer.value?.name ?? ''),
+                                    subtitle: Text(delivery.customer.value
+                                            ?.getAddressShort() ??
+                                        ''),
+                                    trailing: Theme(
+                                      data: Theme.of(context)
+                                          .copyWith(useMaterial3: false),
+                                      child: PopupMenuButton<String>(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        // Callback that sets the selected popup menu item.
+                                        onSelected: (String option) {
+                                          switch (option) {
+                                            case 'Edit':
+                                              // TODO: Edit Function
+                                              break;
+                                            case 'Delete':
+                                              // TODO: Delete Function
+                                              break;
+                                            default:
+                                              break;
+                                          }
+                                        },
+                                        itemBuilder: (BuildContext context) =>
+                                            <PopupMenuEntry<String>>[
+                                          const PopupMenuItem<String>(
+                                            value: 'Edit',
+                                            child: Text('Edit'),
+                                          ),
+                                          const PopupMenuItem<String>(
+                                            value: 'Delete',
+                                            child: Text('Delete'),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                        ])
+                                );
+                              },
+                            ),
+                          ],
+                        )
                 ],
               ),
             );
