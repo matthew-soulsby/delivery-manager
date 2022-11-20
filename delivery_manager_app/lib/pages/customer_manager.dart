@@ -105,34 +105,36 @@ class _CustomerManagerState extends State<CustomerManager> {
                     title: Text(customer.name ?? ''),
                     subtitle: Text(customer.getAddressShort()),
                     trailing: Theme(
-                        data: Theme.of(context).copyWith(useMaterial3: false),
-                        child: PopupMenuButton<String>(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            // Callback that sets the selected popup menu item.
-                            onSelected: (String option) {
-                              switch (option) {
-                                case 'Edit':
-                                  editCustomer(context, customer);
-                                  break;
-                                case 'Delete':
-                                  deleteCustomer(context, customer);
-                                  break;
-                                default:
-                                  break;
-                              }
-                            },
-                            itemBuilder: (BuildContext context) =>
-                                <PopupMenuEntry<String>>[
-                                  const PopupMenuItem<String>(
-                                    value: 'Edit',
-                                    child: Text('Edit'),
-                                  ),
-                                  const PopupMenuItem<String>(
-                                    value: 'Delete',
-                                    child: Text('Delete'),
-                                  ),
-                                ])),
+                      data: Theme.of(context).copyWith(useMaterial3: false),
+                      child: PopupMenuButton<String>(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        // Callback that sets the selected popup menu item.
+                        onSelected: (String option) {
+                          switch (option) {
+                            case 'Edit':
+                              editCustomer(context, customer);
+                              break;
+                            case 'Delete':
+                              deleteCustomer(context, customer);
+                              break;
+                            default:
+                              break;
+                          }
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          const PopupMenuItem<String>(
+                            value: 'Edit',
+                            child: Text('Edit'),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: 'Delete',
+                            child: Text('Delete'),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 );
               },
