@@ -157,7 +157,7 @@ class _ItemFormScreenState extends State<ItemFormScreen> {
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     // TODO: Make price format properly
-                    return 'Please enter price in cents';
+                    return 'Please enter price';
                   }
                   return null;
                 },
