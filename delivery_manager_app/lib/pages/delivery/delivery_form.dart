@@ -126,6 +126,7 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
 
     widget.isar.writeTxn(() async {
       await widget.isar.deliverys.put(delivery);
+      await delivery.customer.save();
     }).then((value) => Navigator.pop(context));
   }
 
