@@ -165,7 +165,7 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: TextField(
+              child: TextFormField(
                 controller: dateInputController,
                 decoration: const InputDecoration(
                   icon: Icon(
@@ -189,6 +189,12 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
                           DateFormat('dd-MM-yyyy').format(selectedDate);
                     });
                   }
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter date';
+                  }
+                  return null;
                 },
               ),
             ),
