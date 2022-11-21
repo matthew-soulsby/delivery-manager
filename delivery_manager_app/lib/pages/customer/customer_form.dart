@@ -115,7 +115,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: TextFormField(
                 initialValue: _addressLine1,
                 decoration: const InputDecoration(
@@ -138,7 +138,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: TextFormField(
                 initialValue: _addressLine2,
                 decoration: const InputDecoration(
@@ -156,7 +156,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: TextFormField(
                 initialValue: _suburb,
                 decoration: const InputDecoration(
@@ -179,7 +179,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: DropdownButtonFormField<String>(
                 value: _stateTerritory,
                 items: const [
@@ -208,7 +208,7 @@ class _CustomerFormScreenState extends State<CustomerFormScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               child: TextFormField(
                 initialValue: (_postcode == 0) ? '' : _postcode.toString(),
                 decoration: const InputDecoration(
