@@ -17,7 +17,7 @@ class Delivery {
   @Enumerated(EnumType.ordinal32)
   Recurrance? recurrance;
 
-  List<Item>? itemsToDeliver;
+  List<Item> itemsToDeliver = [];
 
   Payment? payment;
 

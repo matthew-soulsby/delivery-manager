@@ -82,17 +82,12 @@ int _deliveryEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.itemsToDeliver.length * 3;
   {
-    final list = object.itemsToDeliver;
-    if (list != null) {
-      bytesCount += 3 + list.length * 3;
-      {
-        final offsets = allOffsets[Item]!;
-        for (var i = 0; i < list.length; i++) {
-          final value = list[i];
-          bytesCount += ItemSchema.estimateSize(value, offsets, allOffsets);
-        }
-      }
+    final offsets = allOffsets[Item]!;
+    for (var i = 0; i < object.itemsToDeliver.length; i++) {
+      final value = object.itemsToDeliver[i];
+      bytesCount += ItemSchema.estimateSize(value, offsets, allOffsets);
     }
   }
   {
@@ -137,11 +132,12 @@ Delivery _deliveryDeserialize(
   object.date = reader.readDateTimeOrNull(offsets[0]);
   object.id = id;
   object.itemsToDeliver = reader.readObjectList<Item>(
-    offsets[1],
-    ItemSchema.deserialize,
-    allOffsets,
-    Item(),
-  );
+        offsets[1],
+        ItemSchema.deserialize,
+        allOffsets,
+        Item(),
+      ) ??
+      [];
   object.payment = reader.readObjectOrNull<Payment>(
     offsets[2],
     PaymentSchema.deserialize,
@@ -163,11 +159,12 @@ P _deliveryDeserializeProp<P>(
       return (reader.readDateTimeOrNull(offset)) as P;
     case 1:
       return (reader.readObjectList<Item>(
-        offset,
-        ItemSchema.deserialize,
-        allOffsets,
-        Item(),
-      )) as P;
+            offset,
+            ItemSchema.deserialize,
+            allOffsets,
+            Item(),
+          ) ??
+          []) as P;
     case 2:
       return (reader.readObjectOrNull<Payment>(
         offset,
@@ -541,24 +538,6 @@ extension DeliveryQueryFilter
   }
 
   QueryBuilder<Delivery, Delivery, QAfterFilterCondition>
-      itemsToDeliverIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'itemsToDeliver',
-      ));
-    });
-  }
-
-  QueryBuilder<Delivery, Delivery, QAfterFilterCondition>
-      itemsToDeliverIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'itemsToDeliver',
-      ));
-    });
-  }
-
-  QueryBuilder<Delivery, Delivery, QAfterFilterCondition>
       itemsToDeliverLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -861,7 +840,7 @@ extension DeliveryQueryProperty
     });
   }
 
-  QueryBuilder<Delivery, List<Item>?, QQueryOperations>
+  QueryBuilder<Delivery, List<Item>, QQueryOperations>
       itemsToDeliverProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'itemsToDeliver');

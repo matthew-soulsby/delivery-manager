@@ -1,4 +1,3 @@
-import 'package:delivery_manager_app/assets/loading_spinner.dart';
 import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:delivery_manager_app/pages/customer/customer_form.dart';
 import 'package:delivery_manager_app/themes/button_style.dart';
@@ -16,6 +15,8 @@ class CustomerManager extends StatefulWidget {
 
 class _CustomerManagerState extends State<CustomerManager> {
   List<Customer> _customerList = [];
+
+  String _searchString = '';
 
   void addCustomer(BuildContext context) {
     Navigator.push(
@@ -92,52 +93,87 @@ class _CustomerManagerState extends State<CustomerManager> {
           ? const Center(
               child: Text('No customers found'),
             )
-          : ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: _customerList.length,
-              itemBuilder: (context, index) {
-                Customer customer = _customerList[index];
-
-                return Card(
-                  elevation: 0,
-                  color: Theme.of(context).colorScheme.surfaceVariant,
-                  child: ListTile(
-                    title: Text(customer.name ?? ''),
-                    subtitle: Text(customer.getAddressShort()),
-                    trailing: Theme(
-                      data: Theme.of(context).copyWith(useMaterial3: false),
-                      child: PopupMenuButton<String>(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        // Callback that sets the selected popup menu item.
-                        onSelected: (String option) {
-                          switch (option) {
-                            case 'Edit':
-                              editCustomer(context, customer);
-                              break;
-                            case 'Delete':
-                              deleteCustomer(context, customer);
-                              break;
-                            default:
-                              break;
-                          }
-                        },
-                        itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<String>>[
-                          const PopupMenuItem<String>(
-                            value: 'Edit',
-                            child: Text('Edit'),
-                          ),
-                          const PopupMenuItem<String>(
-                            value: 'Delete',
-                            child: Text('Delete'),
-                          ),
-                        ],
-                      ),
+          : Column(
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    initialValue: _searchString,
+                    decoration: const InputDecoration(
+                      labelText: 'Search',
+                      helperText: "Enter customer's name or address",
+                      border: OutlineInputBorder(),
+                      icon: Icon(Icons.search_rounded),
                     ),
+                    onChanged: (String? value) {
+                      if (value != null) {
+                        setState(() {
+                          _searchString = value.toLowerCase();
+                        });
+                      }
+                    },
                   ),
-                );
-              },
+                ),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(8),
+                  itemCount: _customerList.length,
+                  itemBuilder: (context, index) {
+                    Customer customer = _customerList[index];
+                    if (customer.name!.toLowerCase().contains(_searchString) ||
+                        customer
+                            .getAddressShort()
+                            .toLowerCase()
+                            .contains(_searchString)) {
+                      return Card(
+                        elevation: 0,
+                        color: Theme.of(context).colorScheme.surfaceVariant,
+                        child: ListTile(
+                          title: Text(customer.name ?? ''),
+                          subtitle: Text(customer.getAddressShort()),
+                          trailing: Theme(
+                            data:
+                                Theme.of(context).copyWith(useMaterial3: false),
+                            child: PopupMenuButton<String>(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              // Callback that sets the selected popup menu item.
+                              onSelected: (String option) {
+                                switch (option) {
+                                  case 'Edit':
+                                    editCustomer(context, customer);
+                                    break;
+                                  case 'Delete':
+                                    deleteCustomer(context, customer);
+                                    break;
+                                  default:
+                                    break;
+                                }
+                              },
+                              itemBuilder: (BuildContext context) =>
+                                  <PopupMenuEntry<String>>[
+                                const PopupMenuItem<String>(
+                                  value: 'Edit',
+                                  child: Text('Edit'),
+                                ),
+                                const PopupMenuItem<String>(
+                                  value: 'Delete',
+                                  child: Text('Delete'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
+              ],
             ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: getPrimaryColors(context)[0],
