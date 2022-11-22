@@ -1,9 +1,7 @@
 import 'package:delivery_manager_app/classes/item.dart';
 import 'package:delivery_manager_app/themes/button_style.dart';
-import 'package:delivery_manager_app/classes/customer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isar/isar.dart';
 
 class ItemFormScreen extends StatefulWidget {
   const ItemFormScreen({super.key, this.item});

@@ -248,7 +248,7 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Delivering to:'),
+                      const Text('Delivering to:'),
                       Text(_selectedCustomer?.name ?? 'No customer selected'),
                       Text(_selectedCustomer?.getAddressShort() ?? ''),
                     ],

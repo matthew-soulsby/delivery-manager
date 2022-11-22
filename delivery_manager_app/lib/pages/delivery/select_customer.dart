@@ -1,6 +1,4 @@
 import 'package:delivery_manager_app/classes/customer.dart';
-import 'package:delivery_manager_app/pages/customer/customer_form.dart';
-import 'package:delivery_manager_app/themes/button_style.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 

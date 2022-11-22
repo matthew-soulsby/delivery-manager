@@ -1,6 +1,4 @@
 import 'package:delivery_manager_app/classes/customer.dart';
-import 'package:delivery_manager_app/classes/payment.dart';
-import 'package:delivery_manager_app/classes/item.dart';
 import 'package:delivery_manager_app/classes/delivery.dart';
 import 'package:delivery_manager_app/pages/customer_manager.dart';
 import 'package:delivery_manager_app/pages/report_manager.dart';

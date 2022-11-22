@@ -1,6 +1,5 @@
 import 'package:delivery_manager_app/pages/delivery/delivery_view.dart';
 import 'package:delivery_manager_app/themes/button_style.dart';
-import 'package:delivery_manager_app/assets/loading_spinner.dart';
 import 'package:delivery_manager_app/assets/menu_card.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
