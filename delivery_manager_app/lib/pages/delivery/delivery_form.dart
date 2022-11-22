@@ -147,6 +147,12 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
   }
 
   @override
+  void dispose() {
+    dateInputController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
