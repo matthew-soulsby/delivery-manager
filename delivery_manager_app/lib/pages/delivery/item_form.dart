@@ -67,8 +67,11 @@ class _ItemFormScreenState extends State<ItemFormScreen> {
     }
 
     priceInputController.addListener(() {
+      // Prune non-numeric chars and convert to int
       final int unformattedInput = parsePrice(priceInputController.text);
+      // Format the new value with correct formatting
       final String formattedInput = formatPrice(unformattedInput);
+      // Update the text field
       priceInputController.value = priceInputController.value.copyWith(
         text: formattedInput,
         selection: TextSelection(
