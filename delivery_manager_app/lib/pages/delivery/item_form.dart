@@ -1,5 +1,6 @@
 import 'package:delivery_manager_app/classes/item.dart';
 import 'package:delivery_manager_app/themes/button_style.dart';
+import 'package:delivery_manager_app/util/price_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +15,8 @@ class ItemFormScreen extends StatefulWidget {
 
 class _ItemFormScreenState extends State<ItemFormScreen> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController priceInputController =
+      TextEditingController(text: formatPrice(0));
 
   String _pageTitle = 'Add Item';
 
@@ -59,7 +62,27 @@ class _ItemFormScreenState extends State<ItemFormScreen> {
       _itemPLU = widget.item?.itemPLU ?? '';
       _barcode = widget.item?.barcode ?? '';
       _priceCents = widget.item?.priceCents ?? 0;
+
+      priceInputController.text = formatPrice(_priceCents);
     }
+
+    priceInputController.addListener(() {
+      final int unformattedInput = parsePrice(priceInputController.text);
+      final String formattedInput = formatPrice(unformattedInput);
+      priceInputController.value = priceInputController.value.copyWith(
+        text: formattedInput,
+        selection: TextSelection(
+            baseOffset: formattedInput.length,
+            extentOffset: formattedInput.length),
+        composing: TextRange.empty,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    priceInputController.dispose();
+    super.dispose();
   }
 
   @override
@@ -102,27 +125,26 @@ class _ItemFormScreenState extends State<ItemFormScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                initialValue: (_priceCents == 0) ? '' : _priceCents.toString(),
+                controller: priceInputController,
                 decoration: const InputDecoration(
                     labelText: 'Price',
                     helperText: "Enter item's price",
                     border: OutlineInputBorder()),
                 onSaved: (String? value) {
                   if (value != null && value != '') {
+                    final unformattedPrice = parsePrice(value);
                     setState(() {
-                      _priceCents = int.parse(value);
+                      _priceCents = unformattedPrice;
                     });
                   }
                 },
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    // TODO: Make price format properly
                     return 'Please enter price';
                   }
                   return null;
                 },
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
             ),
             Padding(

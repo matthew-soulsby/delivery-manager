@@ -17,3 +17,8 @@ String formatPrice(int priceCents) {
     decimalDigits: 2,
   ).format(priceCents / 100);
 }
+
+int parsePrice(String formattedPrice) {
+  String unformattedPrice = formattedPrice.replaceAll(RegExp(r"[^0-9]"), '');
+  return int.parse(unformattedPrice);
+}
