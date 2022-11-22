@@ -17,25 +17,30 @@ const DeliverySchema = CollectionSchema(
   name: r'Delivery',
   id: 1954919988841945312,
   properties: {
-    r'date': PropertySchema(
+    r'completed': PropertySchema(
       id: 0,
+      name: r'completed',
+      type: IsarType.bool,
+    ),
+    r'date': PropertySchema(
+      id: 1,
       name: r'date',
       type: IsarType.dateTime,
     ),
     r'itemsToDeliver': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'itemsToDeliver',
       type: IsarType.objectList,
       target: r'Item',
     ),
     r'payment': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'payment',
       type: IsarType.object,
       target: r'Payment',
     ),
     r'recurrance': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'recurrance',
       type: IsarType.int,
       enumMap: _DeliveryrecurranceEnumValueMap,
@@ -106,20 +111,21 @@ void _deliverySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDateTime(offsets[0], object.date);
+  writer.writeBool(offsets[0], object.completed);
+  writer.writeDateTime(offsets[1], object.date);
   writer.writeObjectList<Item>(
-    offsets[1],
+    offsets[2],
     allOffsets,
     ItemSchema.serialize,
     object.itemsToDeliver,
   );
   writer.writeObject<Payment>(
-    offsets[2],
+    offsets[3],
     allOffsets,
     PaymentSchema.serialize,
     object.payment,
   );
-  writer.writeInt(offsets[3], object.recurrance?.index);
+  writer.writeInt(offsets[4], object.recurrance?.index);
 }
 
 Delivery _deliveryDeserialize(
@@ -129,22 +135,23 @@ Delivery _deliveryDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Delivery();
-  object.date = reader.readDateTimeOrNull(offsets[0]);
+  object.completed = reader.readBool(offsets[0]);
+  object.date = reader.readDateTimeOrNull(offsets[1]);
   object.id = id;
   object.itemsToDeliver = reader.readObjectList<Item>(
-        offsets[1],
+        offsets[2],
         ItemSchema.deserialize,
         allOffsets,
         Item(),
       ) ??
       [];
   object.payment = reader.readObjectOrNull<Payment>(
-    offsets[2],
+    offsets[3],
     PaymentSchema.deserialize,
     allOffsets,
   );
   object.recurrance =
-      _DeliveryrecurranceValueEnumMap[reader.readIntOrNull(offsets[3])];
+      _DeliveryrecurranceValueEnumMap[reader.readIntOrNull(offsets[4])];
   return object;
 }
 
@@ -156,8 +163,10 @@ P _deliveryDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 1:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 2:
       return (reader.readObjectList<Item>(
             offset,
             ItemSchema.deserialize,
@@ -165,13 +174,13 @@ P _deliveryDeserializeProp<P>(
             Item(),
           ) ??
           []) as P;
-    case 2:
+    case 3:
       return (reader.readObjectOrNull<Payment>(
         offset,
         PaymentSchema.deserialize,
         allOffsets,
       )) as P;
-    case 3:
+    case 4:
       return (_DeliveryrecurranceValueEnumMap[reader.readIntOrNull(offset)])
           as P;
     default:
@@ -400,6 +409,16 @@ extension DeliveryQueryWhere on QueryBuilder<Delivery, Delivery, QWhereClause> {
 
 extension DeliveryQueryFilter
     on QueryBuilder<Delivery, Delivery, QFilterCondition> {
+  QueryBuilder<Delivery, Delivery, QAfterFilterCondition> completedEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'completed',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<Delivery, Delivery, QAfterFilterCondition> dateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -747,6 +766,18 @@ extension DeliveryQueryLinks
 }
 
 extension DeliveryQuerySortBy on QueryBuilder<Delivery, Delivery, QSortBy> {
+  QueryBuilder<Delivery, Delivery, QAfterSortBy> sortByCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'completed', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Delivery, Delivery, QAfterSortBy> sortByCompletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'completed', Sort.desc);
+    });
+  }
+
   QueryBuilder<Delivery, Delivery, QAfterSortBy> sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
@@ -774,6 +805,18 @@ extension DeliveryQuerySortBy on QueryBuilder<Delivery, Delivery, QSortBy> {
 
 extension DeliveryQuerySortThenBy
     on QueryBuilder<Delivery, Delivery, QSortThenBy> {
+  QueryBuilder<Delivery, Delivery, QAfterSortBy> thenByCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'completed', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Delivery, Delivery, QAfterSortBy> thenByCompletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'completed', Sort.desc);
+    });
+  }
+
   QueryBuilder<Delivery, Delivery, QAfterSortBy> thenByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
@@ -813,6 +856,12 @@ extension DeliveryQuerySortThenBy
 
 extension DeliveryQueryWhereDistinct
     on QueryBuilder<Delivery, Delivery, QDistinct> {
+  QueryBuilder<Delivery, Delivery, QDistinct> distinctByCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'completed');
+    });
+  }
+
   QueryBuilder<Delivery, Delivery, QDistinct> distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
@@ -831,6 +880,12 @@ extension DeliveryQueryProperty
   QueryBuilder<Delivery, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Delivery, bool, QQueryOperations> completedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'completed');
     });
   }
 

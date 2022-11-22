@@ -21,5 +21,7 @@ class Delivery {
 
   Payment? payment;
 
+  bool completed = false;
+
   final customer = IsarLink<Customer>();
 }
