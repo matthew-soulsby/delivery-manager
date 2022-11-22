@@ -104,6 +104,32 @@ class _ItemFormScreenState extends State<ItemFormScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                initialValue: (_priceCents == 0) ? '' : _priceCents.toString(),
+                decoration: const InputDecoration(
+                    labelText: 'Price',
+                    helperText: "Enter item's price",
+                    border: OutlineInputBorder()),
+                onSaved: (String? value) {
+                  if (value != null && value != '') {
+                    setState(() {
+                      _priceCents = int.parse(value);
+                    });
+                  }
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    // TODO: Make price format properly
+                    return 'Please enter price';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
                 initialValue: _itemPLU,
                 decoration: const InputDecoration(
                     labelText: 'Item PLU',
@@ -134,32 +160,6 @@ class _ItemFormScreenState extends State<ItemFormScreen> {
                       _barcode = value;
                     });
                   }
-                },
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                initialValue: (_priceCents == 0) ? '' : _priceCents.toString(),
-                decoration: const InputDecoration(
-                    labelText: 'Price',
-                    helperText: "Enter item's price",
-                    border: OutlineInputBorder()),
-                onSaved: (String? value) {
-                  if (value != null && value != '') {
-                    setState(() {
-                      _priceCents = int.parse(value);
-                    });
-                  }
-                },
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    // TODO: Make price format properly
-                    return 'Please enter price';
-                  }
-                  return null;
                 },
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
