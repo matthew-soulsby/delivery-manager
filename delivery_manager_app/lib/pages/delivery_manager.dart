@@ -1,4 +1,5 @@
 import 'package:delivery_manager_app/pages/delivery/delivery_view.dart';
+import 'package:delivery_manager_app/pages/route/route_constructor.dart';
 import 'package:delivery_manager_app/themes/button_style.dart';
 import 'package:delivery_manager_app/assets/menu_card.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,14 @@ class DeliveryManager extends StatelessWidget {
             description: 'View, optimise, and start your delivery run',
             button: TextButton(
               style: filledButtonPrimary(context),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RouteConstructor(isar: isar),
+                  ),
+                );
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
