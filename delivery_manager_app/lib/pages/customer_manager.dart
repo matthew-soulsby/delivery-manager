@@ -100,7 +100,7 @@ class _CustomerManagerState extends State<CustomerManager> {
                     height: 12,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                     child: TextFormField(
                       initialValue: _searchString,
                       decoration: const InputDecoration(

@@ -116,27 +116,30 @@ class _RouteConstructorState extends State<RouteConstructor> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text('Current Route'),
-                        TextButton(
-                          style: filledButtonPrimary(context),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    RouteVisualiser(isar: widget.isar),
-                              ),
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: const [
-                              SizedBox(),
-                              Text('Optimise'),
-                              Icon(
-                                Icons.navigate_next_rounded,
-                              ),
-                            ],
+                        SizedBox(
+                          width: 125,
+                          child: TextButton(
+                            style: filledButtonPrimary(context),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      RouteVisualiser(isar: widget.isar),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: const [
+                                SizedBox(),
+                                Text('Optimise'),
+                                Icon(
+                                  Icons.navigate_next_rounded,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
