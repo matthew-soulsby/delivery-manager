@@ -44,7 +44,7 @@ class DeliveryManager extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 16,
+            height: 8,
           ),
           MenuCard(
             title: "Schedule Deliveries",

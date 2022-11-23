@@ -10,6 +10,7 @@ import 'package:isar/isar.dart';
 
 void main() async {
   final isar = await Isar.open([CustomerSchema, DeliverySchema]);
+
   runApp(DeliveryManagerApp(
     isar: isar,
   ));
