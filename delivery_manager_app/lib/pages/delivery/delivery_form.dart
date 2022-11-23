@@ -259,7 +259,7 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
                       Text(_selectedCustomer?.getAddressShort() ?? ''),
                     ],
                   ),
-                  TextButton.icon(
+                  OutlinedButton.icon(
                     onPressed: () {
                       selectCustomer();
                     },
@@ -280,7 +280,7 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Items to deliver:'),
-                      TextButton.icon(
+                      OutlinedButton.icon(
                         onPressed: () async {
                           addItem();
                         },
