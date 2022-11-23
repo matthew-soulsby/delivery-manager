@@ -248,24 +248,24 @@ class _DeliveryFormScreenState extends State<DeliveryFormScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Delivering to:'),
-                      Text(_selectedCustomer?.name ?? 'No customer selected'),
-                      Text(_selectedCustomer?.getAddressShort() ?? ''),
+                      OutlinedButton.icon(
+                        onPressed: () {
+                          selectCustomer();
+                        },
+                        icon: const Icon(Icons.add_rounded),
+                        label: const Text('Select Customer'),
+                      ),
                     ],
                   ),
-                  OutlinedButton.icon(
-                    onPressed: () {
-                      selectCustomer();
-                    },
-                    icon: const Icon(Icons.add_rounded),
-                    label: const Text('Select Customer'),
-                  ),
+                  Text(_selectedCustomer?.name ?? 'No customer selected'),
+                  Text(_selectedCustomer?.getAddressShort() ?? ''),
                 ],
               ),
             ),
