@@ -124,8 +124,10 @@ class _RouteConstructorState extends State<RouteConstructor> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      RouteVisualiser(isar: widget.isar),
+                                  builder: (context) => RouteVisualiser(
+                                    isar: widget.isar,
+                                    deliveries: _deliveriesInRoute,
+                                  ),
                                 ),
                               );
                             },
